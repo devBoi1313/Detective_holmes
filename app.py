@@ -1,17 +1,12 @@
 """
 ╔══════════════════════════════════════════════════════════════════╗
-║        SHERLOCK HOLMES INTELLIGENCE BUREAU  v3                  ║
+║        SHERLOCK HOLMES INTELLIGENCE BUREAU  v4                  ║
 ║        Silver Blaze Case — NLP + Knowledge Graph Engine         ║
 ╚══════════════════════════════════════════════════════════════════╝
-CHANGES v3:
-  • Hero buttons removed
-  • UnifrakturMaguntia for titles only (hero + section headers)
-  • Image URL fixed → Assets/Holmes.jpg (capital A and H)
-  • Verdict/Case Closed section removed
-  • Code snippet section added (syntax-highlighted, with explanation)
-  • Custom corpus uploader → generates live knowledge graph
-  • Holmes deduction made minimal + concise conclusion
-  • Team credits cards at footer
+CHANGES v4:
+  • Hero image removed
+  • Font changed to Cormorant Garamond (Victorian serif, legible)
+  • Team role subtexts removed — name only
 """
 
 import streamlit as st
@@ -38,14 +33,6 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.tag import pos_tag
 from nltk import FreqDist
 from nltk.tree import Tree
-
-# ══════════════════════════════════════════════════════════════════
-#  HERO IMAGE  — Assets/Holmes.jpg (capital A, capital H)
-# ══════════════════════════════════════════════════════════════════
-HERO_IMAGE_URL = (
-    "https://raw.githubusercontent.com/devBoi1313/Detective_holmes"
-    "/main/Assets/Holmes.jpg"
-)
 
 # ══════════════════════════════════════════════════════════════════
 #  CORPUS
@@ -434,7 +421,7 @@ st.set_page_config(
 # ══════════════════════════════════════════════════════════════════
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=IM+Fell+English:ital@0;1&family=Playfair+Display:wght@400;700;900&family=Josefin+Sans:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=IM+Fell+English:ital@0;1&family=Playfair+Display:wght@400;700;900&family=Josefin+Sans:wght@300;400;600&display=swap');
 
 :root {
     --navy:    #0a0f1e;
@@ -457,22 +444,24 @@ html, body, [class*="css"] {
 #MainMenu, footer, header { visibility: hidden; }
 .block-container { padding-top: 0 !important; max-width: 1400px; }
 
-/* ── UnifrakturMaguntia — titles only ── */
+/* ── Cormorant Garamond — titles only ── */
 .gothic-title {
-    font-family: 'UnifrakturMaguntia', cursive;
-    letter-spacing: 1px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    letter-spacing: 2px;
     line-height: 1.15;
 }
 
 /* ── Section Headers ── */
 .section-header {
-    font-family: 'UnifrakturMaguntia', cursive;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 2.2rem;
+    font-weight: 700;
     color: var(--gold);
     margin: 2.5rem 0 0.4rem;
     border-bottom: 1px solid var(--gold3);
     padding-bottom: 0.4rem;
-    letter-spacing: 1px;
+    letter-spacing: 3px;
 }
 .section-sub {
     font-family: 'IM Fell English', serif;
@@ -485,34 +474,18 @@ html, body, [class*="css"] {
 /* ── Hero ── */
 .hero-wrap {
     display: flex;
-    min-height: 88vh;
-    background: linear-gradient(135deg, #060c1a 0%, #0f1929 60%, #060c1a 100%);
+    align-items: center;
+    min-height: 80vh;
+    background:
+        radial-gradient(ellipse at 70% 50%, rgba(212,168,83,0.05) 0%, transparent 60%),
+        linear-gradient(135deg, #060c1a 0%, #0f1929 60%, #060c1a 100%);
     border-bottom: 1px solid var(--gold3);
     overflow: hidden;
+    padding: 4rem 5rem;
 }
 .hero-left {
-    flex: 1.15; display: flex; flex-direction: column;
-    justify-content: center;
-    padding: 4rem 3rem 4rem 4rem; z-index: 2;
-}
-.hero-right {
-    flex: 0.85; position: relative; overflow: hidden;
-}
-.hero-right img {
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center top; display: block;
-}
-.hero-fade-left {
-    position: absolute; top:0; left:0; bottom:0; width:55%;
-    background: linear-gradient(to right, #060c1a 0%, transparent 100%); z-index:2;
-}
-.hero-fade-bottom {
-    position: absolute; left:0; right:0; bottom:0; height:35%;
-    background: linear-gradient(to top, #060c1a 0%, transparent 100%); z-index:2;
-}
-.hero-fade-top {
-    position: absolute; left:0; right:0; top:0; height:15%;
-    background: linear-gradient(to bottom, #060c1a 0%, transparent 100%); z-index:2;
+    max-width: 720px;
+    z-index: 2;
 }
 .hero-tag {
     font-size: 0.63rem; letter-spacing: 4px; text-transform: uppercase;
@@ -522,10 +495,11 @@ html, body, [class*="css"] {
     margin-bottom: 1.5rem; width: fit-content;
 }
 .hero-title {
-    font-family: 'UnifrakturMaguntia', cursive;
+    font-family: 'Cormorant Garamond', serif;
     font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 700;
     color: var(--parch); line-height: 1.1; margin-bottom: 0.6rem;
-    letter-spacing: 1px;
+    letter-spacing: 3px;
 }
 .hero-title span { color: var(--gold); }
 .hero-subtitle {
@@ -665,8 +639,9 @@ html, body, [class*="css"] {
     padding: 2rem; text-align: center; margin-bottom: 1.5rem;
 }
 .upload-title {
-    font-family:'UnifrakturMaguntia',cursive;
-    font-size:1.6rem; color:var(--gold); margin-bottom:0.5rem;
+    font-family:'Cormorant Garamond',serif;
+    font-weight: 700;
+    font-size:1.8rem; color:var(--gold); margin-bottom:0.5rem; letter-spacing:2px;
 }
 .upload-sub { color:var(--parch2); font-size:0.85rem; }
 
@@ -697,8 +672,7 @@ html, body, [class*="css"] {
     font-weight:900; color:var(--navy);
     margin: 0 auto 0.8rem;
 }
-.team-name { font-family:'IM Fell English',serif; font-size:1.05rem; color:var(--parch); margin-bottom:0.3rem; }
-.team-role { font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold3); }
+.team-name { font-family:'IM Fell English',serif; font-size:1.1rem; color:var(--parch); }
 </style>
 """, unsafe_allow_html=True)
 
@@ -732,12 +706,6 @@ st.markdown(f"""
       Natural Language Processing, maps every relationship into a Knowledge Graph,
       and reconstructs Holmes-style logical deductions — entirely from raw text.
     </p>
-  </div>
-  <div class="hero-right">
-    <img src="{HERO_IMAGE_URL}" alt="Detective silhouette in fog"/>
-    <div class="hero-fade-left"></div>
-    <div class="hero-fade-bottom"></div>
-    <div class="hero-fade-top"></div>
   </div>
 </div>
 """, unsafe_allow_html=True)
@@ -1208,8 +1176,8 @@ with st.expander("🔬 Expand Debug Panel", expanded=False):
 st.markdown("""
 <div style="margin-top:4rem; border-top:1px solid #1a2540; padding-top:2.5rem;">
   <div style="text-align:center; margin-bottom:2rem;">
-    <span style="font-family:'UnifrakturMaguntia',cursive; font-size:1.8rem;
-                 color:#d4a853; letter-spacing:1px;">
+    <span style="font-family:'Cormorant Garamond',serif; font-weight:700; font-size:2rem;
+                 color:#d4a853; letter-spacing:3px;">
       The Investigators
     </span><br>
     <span style="font-family:'IM Fell English',serif; font-style:italic;
@@ -1220,20 +1188,19 @@ st.markdown("""
 </div>""", unsafe_allow_html=True)
 
 TEAM = [
-    ("Vijay J",             "NLP Engineer",       "VJ"),
-    ("Bishwarup Biswas",    "Graph Architect",    "BB"),
-    ("Jayasuriya",          "Data Analyst",       "JS"),
-    ("Yugmitha Kattayan",   "UI & Integration",   "YK"),
+    ("Vijay J",             "VJ"),
+    ("Bishwarup Biswas",    "BB"),
+    ("Jayasuriya",          "JS"),
+    ("Yugmitha Kattayan",   "YK"),
 ]
 
 t1, t2, t3, t4 = st.columns(4)
-for col, (name, role, initials) in zip([t1, t2, t3, t4], TEAM):
+for col, (name, initials) in zip([t1, t2, t3, t4], TEAM):
     with col:
         st.markdown(f"""
         <div class="team-card">
           <div class="team-avatar">{initials}</div>
           <div class="team-name">{name}</div>
-          <div class="team-role">{role}</div>
         </div>""", unsafe_allow_html=True)
 
 # ── Footer
